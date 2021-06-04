@@ -4,7 +4,7 @@ const express = require('express');
 
 const app = express();
 
-const db = require('./models');
+const db = require('./models/index');
 db.mongoose.connect(db.url, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -15,7 +15,9 @@ db.mongoose.connect(db.url, {
     process.exit();
 })
 
-const PORT = process.env.PORT || 8080;
+app.use(express.json());
+require("./routes/CinemaRouter")(app);
+const PORT = process.env.PORT ||8080;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 })
