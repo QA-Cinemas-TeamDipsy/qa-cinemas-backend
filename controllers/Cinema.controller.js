@@ -7,7 +7,7 @@ exports.create = (req, res) => {
         res.status(400).send("Field cannot be empty");
         return;
     }
-    //Hard coded
+   
 
     const cinema = new Cinema({
         name: req.body.name,
@@ -59,7 +59,7 @@ exports.create = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Error occurred whe creating Cinema"
+                message: err.message || "Error occurred when creating Cinema"
             });
         });
 };
@@ -75,7 +75,13 @@ exports.findAll = (req, res) => {
 
     Cinema.find(condition)
         .then(data => {
-            res.send(data);
+            if(data.length===0){
+                res.status(404).send("Cinema database is currently empty");
+            }
+       
+            else{
+                res.send(data);
+            }
 
         })
         .catch(err => {
@@ -102,6 +108,8 @@ exports.findOne = (req, res) => {
             });
         });
 };
+
+// exports.find
 exports.update = (req, res) => {
     if (!req.body) {
         return res.status(400).send({
