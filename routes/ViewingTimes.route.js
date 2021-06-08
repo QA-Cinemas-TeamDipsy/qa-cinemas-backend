@@ -1,8 +1,8 @@
-module.exports = app => {
-    const viewingtimes =  require("../controllers/Booking.controller");
-    const router = require("express").Router();
-    
-    router.post('/', viewingtimes.create);
+module.exports = (app) => {
+  const viewingTimes = require("../controllers/ViewingTimes.controller");
+  const router = require("express").Router();
 
-    app.use('/api/viewingtimes', router);
-}
+  router.post("/", viewingTimes.create);
+
+  app.use("/api/viewingTimes", router);
+};
