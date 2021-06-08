@@ -18,8 +18,8 @@ module.exports = mongoose => {
                     county: String,
                     postCode: String
                 },
-                lat: String,
-                lng: String
+                lat: Number,
+                lng: Number
             },
             opening_times: {
                 Mon: {
