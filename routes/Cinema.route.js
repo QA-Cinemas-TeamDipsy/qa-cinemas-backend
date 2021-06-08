@@ -1,5 +1,5 @@
 module.exports = app => {
-    const cinemas =  require("../controller/CinemaController");
+    const cinemas =  require("../controllers/Cinema.controller");
     const router = require("express").Router();
     
     //Create
