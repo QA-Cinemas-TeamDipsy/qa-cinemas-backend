@@ -20,6 +20,22 @@ module.exports = (mongoose) => {
         lat: String,
         lng: String,
       },
+      img: {
+        type: String,
+        required: true,
+        unique: true
+    },
+      directions: {
+        bus: {
+            type: String,
+            required: true
+        },
+        train:{
+           type: String,
+           required: true
+            
+        }
+    },
       opening_times: {
         Mon: {
           open: String,
