@@ -3,12 +3,52 @@ module.exports = (mongoose) => {
     "booking",
     mongoose.Schema(
       {
-        user_id: {
-          type: mongoose.SchemaTypes.ObjectID,
+        amount: {
+          type: String,
           required: true,
         },
-        movie_id: {
-          type: mongoose.SchemaTypes.ObjectID,
+        email: {
+          type: String,
+          required: true,
+        },
+        card_number: {
+          type: String,
+          required: true,
+        },
+        card_exp_month: {
+          type: String,
+          required: true,
+        },
+        card_exp_year: {
+          type: Number,
+          required: true,
+        },
+        card_cvc: {
+          type: Number,
+          required: true,
+        },
+        card_name: {
+          type: String,
+          required: true,
+        },
+        country: {
+          type: String,
+          required: true,
+        },
+        postal_code: {
+          type: String,
+          required: true,
+        },
+        movie_title: {
+          type: String,
+          required: true,
+        },
+        movie_day: {
+          type: String,
+          required: true,
+        },
+        movie_time: {
+          type: String,
           required: true,
         },
         adult_tickets: {
@@ -22,10 +62,6 @@ module.exports = (mongoose) => {
         senior_tickets: {
           type: Number,
           min: 0,
-        },
-        payment_id: {
-          type: String,
-          required: true,
         },
       },
       { timestamps: true }
