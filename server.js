@@ -22,11 +22,13 @@ db.mongoose
 
 app.use(express.json());
 app.use(cors());
-// require("./routes/Cinema.route")(app);
+require("./routes/Cinema.route")(app);
 require("./routes/Movie.route")(app);
 require("./routes/User.route")(app);
-// const stripe = require("./routes/StripeRouter");
-// app.use("/api/", stripe);
+require("./routes/ViewingTimes.route")(app);
+require("./routes/Booking.routes")(app);
+const stripe = require("./routes/StripeRouter");
+app.use("/api/", stripe);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
