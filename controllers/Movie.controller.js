@@ -3,41 +3,39 @@ const Movie = db.movies;
 
 const axios = require(`axios`);
 
-exports.findAllTitles = (req, res) => {
-  Movie.find({}, "-_id title", (err, movies) => {
-    if (err || movies.length === 0) {
-      res.status(404).send({
-        message: "Error: No movies found",
-      });
-    }
+// exports.findAllTitles = (req, res) => {
+//   Movie.find({}, "-_id title", (err, movies) => {
+//     if (err || movies.length === 0) {
+//       res.status(404).send({
+//         message: "Error: No movies found",
+//       });
+//     }
 
-    res.status(200).send(movies);
+//     res.status(200).send(movies);
+//   });
+// };
+
+exports.findAll = (req, res) => {
+  // const name = req.query.name;
+  // let condition = name
+  //   ? {
+  //       name: {
+  //         $regex: new RegExp(name),
+  //         $options: "i",
+  //       },
+  //     }
+  //   : {};
+
+  Movie.find({}, (err, movies) => {
+    if (err) {
+      res.status(500).send({ message: err.message || "An error has occurred" });
+    } else if (movies.length === 0) {
+      res.status(404).send("Movie database is currently empty");
+    }
+    // res.status(201).send(data);
+    res.send(movies);
   });
 };
-
-// exports.findAll = (req, res) => {
-//   const name = req.query.name;
-//   let condition = name
-//     ? {
-//         name: {
-//           $regex: new RegExp(name),
-//           $options: "i",
-//         },
-//       }
-//     : {};
-
-//   Movie.find(condition)
-//     .then((data) => {
-//       if (data.length === 0) {
-//         res.status(404).send("Movie database is curretly empty");
-//       } else {
-//         res.send(data);
-//       }
-//     })
-//     .catch((err) => {
-//       res.status(500).send({ message: err.message || "An error has occured" });
-//     });
-// };
 
 exports.findByTitle = (req, res) => {
   const movieName = req.params.title;
@@ -162,7 +160,7 @@ exports.create = (req, res) => {
           res.status(500).send({
             message:
               err.message ||
-              "An error occured whilst saving the user. Please try again later.",
+              "An error occurred whilst saving the user. Please try again later.",
           });
         });
     })
@@ -171,7 +169,7 @@ exports.create = (req, res) => {
       res.status(500).send({
         message:
           axiosErr.message ||
-          "An error occurred whilst accesing OMDB. Please try again later.",
+          "An error occurred whilst accessing OMDB. Please try again later.",
       });
     });
 };

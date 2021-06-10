@@ -4,5 +4,7 @@ module.exports = (app) => {
 
   router.post("/", viewingTimes.create);
 
+  router.get("/findViewingTimes", viewingTimes.findViewingTimes);
+
   app.use("/api/viewingTimes", router);
 };
