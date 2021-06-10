@@ -7,46 +7,42 @@ exports.create = (req, res) => {
         res.status(400).send("Field cannot be empty");
         return;
     }
-    //Hard coded
+   
 
     const cinema = new Cinema({
         name: req.body.name,
-        location: {
-            address: req.body.location.address,
-
-            lat: req.body.location.lat,
-            lng: req.body.location.lng
-
-        },
+        location: req.body.location,
+        img: req.body.img,
+        directions: req.body.directions,
         opening_times: {
             
                 Mon: {
-                    open: req.body.opening_times.Mon.start,
-                    close: req.body.opening_times.Mon.end
+                    open: req.body.opening_times.Mon.open,
+                    close: req.body.opening_times.Mon.close
                 },
                 Tue: {
-                    open: req.body.opening_times.Tue.start,
-                    close: req.body.opening_times.Tue.end
+                    open: req.body.opening_times.Tue.open,
+                    close: req.body.opening_times.Tue.close
                 },
                 Wed: {
-                    open: req.body.opening_times.Wed.start,
-                    close: req.body.opening_times.Wed.end
+                    open: req.body.opening_times.Wed.open,
+                    close: req.body.opening_times.Wed.close
                 },
                 Thurs: {
-                    open: req.body.opening_times.Thurs.start,
-                    close: req.body.opening_times.Thurs.end
+                    open: req.body.opening_times.Thurs.open,
+                    close: req.body.opening_times.Thurs.close
                 },
                 Fri: {
-                    open: req.body.opening_times.Fri.start,
-                    close: req.body.opening_times.Fri.end
+                    open: req.body.opening_times.Fri.open,
+                    close: req.body.opening_times.Fri.close
                 },
                 Sat: {
-                    open: req.body.opening_times.Sat.start,
-                    close: req.body.opening_times.Sat.end
+                    open: req.body.opening_times.Sat.open,
+                    close: req.body.opening_times.Sat.close
                 },
                 Sun: {
-                    open: req.body.opening_times.Sun.start,
-                    close: req.body.opening_times.Sun.end
+                    open: req.body.opening_times.Sun.open,
+                    close: req.body.opening_times.Sun.close
                 }
             
         },
@@ -59,7 +55,7 @@ exports.create = (req, res) => {
         })
         .catch(err => {
             res.status(500).send({
-                message: err.message || "Error occurred whe creating Cinema"
+                message: err.message || "Error occurred when creating Cinema"
             });
         });
 };
@@ -75,7 +71,13 @@ exports.findAll = (req, res) => {
 
     Cinema.find(condition)
         .then(data => {
-            res.send(data);
+            if(data.length===0){
+                res.status(404).send("Cinema database is currently empty");
+            }
+       
+            else{
+                res.send(data);
+            }
 
         })
         .catch(err => {
@@ -102,6 +104,8 @@ exports.findOne = (req, res) => {
             });
         });
 };
+
+// exports.find
 exports.update = (req, res) => {
     if (!req.body) {
         return res.status(400).send({
