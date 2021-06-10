@@ -1,19 +1,20 @@
-module.exports = app => {
-    const cinemas =  require("../controllers/Cinema.controller");
-    const router = require("express").Router();
-    
-    //Create
-    router.post("/createCinema", cinemas.create);
-    //Find all
-    router.get("/getAllCinemas", cinemas.findAll);
-    //Findy by ID
-    router.get("/getCinemaById/:id" ,cinemas.findOne);
-    //Update by ID
-    router.put("/updateCinema/:id", cinemas.update);
-    //Delete by ID
-    router.delete("/deleteCinema/:id", cinemas.delete);
-    //Delete All
-    router.delete("/deleteAllCinemas", cinemas.deleteAll);
+module.exports = (app) => {
+  const cinemas = require("../controllers/Cinema.controller");
+  const router = require("express").Router();
 
-    app.use('/api/cinemas', router);
-}
+  //Create
+  router.post("/", cinemas.create);
+  //Find all
+  //   router.get("/getAll", cinemas.findAll);
+  router.get("/getAllNames", cinemas.findAllNames);
+  //Find by ID
+  router.get("/getById", cinemas.findOne);
+  //Update by ID
+  router.put("/update", cinemas.update);
+  //Delete by ID
+  router.delete("/delete", cinemas.delete);
+  //Delete All
+  router.delete("/deleteAll", cinemas.deleteAll);
+
+  app.use("/api/cinemas", router);
+};
