@@ -5,8 +5,8 @@ module.exports = (app) => {
 
   router.post("/", movies.create);
 
-  //   router.get("/getAll", movies.findAll);
-  router.get("/getAllTitles", movies.findAllTitles);
+  router.get("/getAll", movies.findAll);
+  // router.get("/getAllTitles", movies.findAllTitles);
   router.get("/getByName/:title", movies.findByTitle);
   router.get("/getAllCurrent", movies.findAllCurrent);
   router.get("/getAllUpcoming", movies.findAllUpcoming);
