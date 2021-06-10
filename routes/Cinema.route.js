@@ -3,9 +3,9 @@ module.exports = (app) => {
   const router = require("express").Router();
 
   //Create
-  router.post("/", cinemas.create);
+  router.post("/createCinema", cinemas.create);
   //Find all
-  //   router.get("/getAll", cinemas.findAll);
+  router.get("/getAllCinemas", cinemas.findAll);
   router.get("/getAllNames", cinemas.findAllNames);
   //Find by ID
   router.get("/getById", cinemas.findOne);

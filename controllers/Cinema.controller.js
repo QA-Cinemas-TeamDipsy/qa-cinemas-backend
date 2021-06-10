@@ -10,7 +10,9 @@ exports.create = (req, res) => {
   const cinema = new Cinema({
     name: req.body.name,
     location: req.body.location,
+    directions: req.body.directions,
     opening_times: req.body.opening_times,
+    img: req.body.img,
     type: req.body.type,
   });
 
@@ -25,6 +27,33 @@ exports.create = (req, res) => {
       });
     });
 };
+exports.findAll = (req, res) => {
+  const name = req.query.name;
+  let condition = name ? {
+      name: {
+          $regex: new RegExp(name),
+          $options: "i"
+      }
+  } : {};
+
+  Cinema.find(condition)
+      .then(data => {
+          if(data.length===0){
+              res.status(404).send("Cinema database is currently empty");
+          }
+     
+          else{
+              res.send(data);
+          }
+
+      })
+      .catch(err => {
+          res.status(500).send({
+              message: err.message || "An error has occured while finding all Cinemas"
+          });
+      });
+};
+
 
 exports.findAllNames = (req, res) => {
   Cinema.find({}, "name", (err, movies) => {
