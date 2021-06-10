@@ -4,6 +4,7 @@ module.exports = app => {
     const router = require("express").Router();
 
     router.post('/', users.create);
+    router.post("/validate", users.validate);
 
 
     app.use('/api/users', router);
