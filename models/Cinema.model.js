@@ -22,8 +22,9 @@ module.exports = (mongoose) => {
       },
       img: {
         type: String,
-        required: true,
-        unique: true
+        
+       
+        
     },
       directions: {
         bus: {
