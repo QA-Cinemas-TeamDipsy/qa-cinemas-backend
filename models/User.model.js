@@ -21,7 +21,10 @@ module.exports = mongoose => {
                 required: true,
                 uniqueCaseInsensitive: true
             },
-            firstName: String,
+            firstName: {
+                type: String,
+                required: true
+            },
             lastName: String,
             postCode: String,
         },

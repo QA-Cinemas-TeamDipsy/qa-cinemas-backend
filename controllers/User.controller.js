@@ -11,7 +11,7 @@ dotenv.config();
 exports.create = (req, res) => {
 
     if (!req.body.username) {
-        res.status(400).send({ message: "Content is empty! Please try again" });
+        res.status(400).send({ message: "Content is incomplete! Please try again" });
         return;
     }
 
@@ -25,11 +25,11 @@ exports.create = (req, res) => {
 
     });
 
-    
+
     user
         .save(user)
         .then(data => {
-            res.send(data);
+            res.status(201).send(data);
         })
         .catch(err => {
             res.status(500).send({
@@ -50,32 +50,30 @@ exports.validate = (req, res) => {
         }]
     }, (err, user) => {
         if (err) {
-            res.send({
+            res.status(500).send({
                 message: "Error occurred whilst finding user. Please try again later."
             })
         } else if (!user) {
-            res.send({
+            res.status(404).send({
                 message: "No user found with specified email address or username."
             })
-        }
+        } else {
+            bcrypt.compare(password, user.password).then(v => {
+                if (v) {
+                    let validatedUser = JSON.parse(JSON.stringify(user));
+                    validatedUser.token = jwt.sign(user.username, process.env.TOKEN_SECRET, { expiresIn: 60 * 60 });
+                    res.status(200).send(validatedUser);
+                } else {
+                    res.status(400).send({ message: "Error: Password is incorrect." });
+                }
 
-        bcrypt.compare(password, user.password).then(v => {
-            if (v) {
-                let validatedUser = JSON.parse(JSON.stringify(user));
-                validatedUser.token = jwt.sign(user.username, process.env.TOKEN_SECRET, {expiresIn: 60 * 60});
-                res.send(validatedUser);
-            } else {
-                res.status(400).send({message: "Error: Password is incorrect."});
-            }
 
-
-        }).catch(err => {
-            res.send({
-                message: err.message || "Error occurred whilst validating user. Please try again later."
+            }).catch(err => {
+                res.status(500).send({
+                    message: err.message || "Error occurred whilst validating user. Please try again later."
+                })
             })
-        })
-
-        
+        }
     })
 }
 
