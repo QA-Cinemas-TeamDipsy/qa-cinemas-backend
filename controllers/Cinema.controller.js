@@ -30,28 +30,26 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
   const name = req.query.name;
   let condition = name ? {
-      name: {
-          $regex: new RegExp(name),
-          $options: "i"
-      }
+    name: {
+      $regex: new RegExp(name),
+      $options: "i"
+    }
   } : {};
 
   Cinema.find(condition)
-      .then(data => {
-          if(data.length===0){
-              res.status(404).send("Cinema database is currently empty");
-          }
-     
-          else{
-              res.send(data);
-          }
+    .then(data => {
+      if (data.length === 0) {
+        res.status(404).send("Cinema database is currently empty");
+      } else {
+        res.send(data);
+      }
 
-      })
-      .catch(err => {
-          res.status(500).send({
-              message: err.message || "An error has occured while finding all Cinemas"
-          });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || "An error has occured while finding all Cinemas"
       });
+    });
 };
 
 
@@ -67,75 +65,11 @@ exports.findAllNames = (req, res) => {
   });
 };
 
-exports.findOne = (req, res) => {
-  const id = req.params.id;
 
-  Cinema.findById(id)
-    .then((data) => {
-      if (!data)
-        res.status(404).send({
-          message: "No Cinemas matching id: " + id,
-        });
-      else res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Error retrieving Cinema with id: " + id,
-      });
-    });
-};
 
-// exports.find
-exports.update = (req, res) => {
-  if (!req.body) {
-    return res.status(400).send({
-      message: "You must enter some data to update",
-    });
-  }
 
-  const id = req.params.id;
 
-  Cinema.findByIdAndUpdate(id, req.body, {
-    useFindAndModify: false,
-  })
-    .then((data) => {
-      if (!data) {
-        res.status(404).send({
-          message: `Cinema not found with id: ${id}`,
-        });
-      } else
-        res.send({
-          message: "Cinema was updated successfully.",
-        });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: "Error updating Cinema with id=" + id,
-      });
-    });
-};
 
-exports.delete = (req, res) => {
-  const id = req.params.id;
-
-  Cinema.findByIdAndRemove(id)
-    .then((data) => {
-      if (!data) {
-        res.status(404).send({
-          message: `Cannot delete Cinema with id=${id}. Maybe Tutorial was not found!`,
-        });
-      } else {
-        res.send({
-          message: "Cinema was deleted successfully!",
-        });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: "Could not delete Cinema with id=" + id,
-      });
-    });
-};
 
 exports.deleteAll = (req, res) => {
   Cinema.deleteMany({})
@@ -146,8 +80,7 @@ exports.deleteAll = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all Cinemas.",
+        message: err.message || "Some error occurred while removing all Cinemas.",
       });
     });
 };

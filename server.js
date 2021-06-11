@@ -31,8 +31,16 @@ const stripe = require("./routes/StripeRouter");
 app.use("/api/", stripe);
 
 const PORT = process.env.PORT || 8080;
+<<<<<<< HEAD
+const server=app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+module.exports = server;
+
+=======
 const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
 module.exports = server;
+>>>>>>> dev

@@ -7,12 +7,7 @@ module.exports = (app) => {
   //Find all
   router.get("/getAllCinemas", cinemas.findAll);
   router.get("/getAllNames", cinemas.findAllNames);
-  //Find by ID
-  router.get("/getById", cinemas.findOne);
-  //Update by ID
-  router.put("/update", cinemas.update);
-  //Delete by ID
-  router.delete("/delete", cinemas.delete);
+  
   //Delete All
   router.delete("/deleteAll", cinemas.deleteAll);
 
